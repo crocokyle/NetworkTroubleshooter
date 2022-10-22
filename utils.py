@@ -1,16 +1,21 @@
 import re
-import subprocess
 import socket
+import time
 from PyQt5.QtCore import QProcess
 
 
 from netaddr import IPAddress
+
+def _get_completed_stdout(process: QProcess) -> str:
+    return process.readAllStandardOutput().data().decode()
 
 def run_command(command: list[str], console_process: QProcess) -> str:
     try:
         console_process.setProgram(command[0])
         if len(command) > 1:
             console_process.setArguments(command[1:])
+        while not console_process.finished():
+            time.sleep(1)
         raw_output = console_process.readAllStandardOutput().data().decode()
         return raw_output
     except:
