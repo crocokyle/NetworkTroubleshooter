@@ -35,11 +35,16 @@ def get_client_net_info() -> dict[str:str]:
     if match := re.search(dns_pattern, ip_config_output):
         dns_servers = match.group(1)
 
+    gateway = None
+    gateway_pattern = r"Default Gateway [ \.]+: ((?:[\d]{1,3}.){3}[\d]{1,3})"
+    if match := re.search(gateway_pattern, ip_config_output):
+        gateway = match.group(1)
     return {
         #"gateway": gateway,
         "hostname": hostname, 
         "ip": ip_address,
         "dns_server": dns_servers,
+        "gateway": gateway,
         }
 
 
