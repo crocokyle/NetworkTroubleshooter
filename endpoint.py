@@ -1,5 +1,5 @@
 import re
-from utils import run_command
+from utils.operating_system import legacy_run_command
 
 class Endpoint:
     def __init__(self, name, ip):
@@ -9,7 +9,7 @@ class Endpoint:
         self.packet_loss = 100
 
     def test(self):
-        ping_result = run_command(['ping', self.ip]).splitlines()[8].strip()
+        ping_result = legacy_run_command(['ping', self.ip]).splitlines()[8].strip()
         if match := re.search(r'\((\d+)% loss\)', ping_result):
             self.packet_loss = int(match.group(1))
             if self.packet_loss == 0:
@@ -22,3 +22,8 @@ class Endpoint:
             self.status = "Error parsing ping results!"
 
         return self.status, self.packet_loss
+
+
+if __name__ == '__main__':
+    router = Endpoint("Router", "192.168.86.1")
+    print(router.test())

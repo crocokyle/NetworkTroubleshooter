@@ -1,6 +1,6 @@
 from main import *
 from endpoint import *
-from discovery import *
+from data_collectors.network.discovery import *
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *

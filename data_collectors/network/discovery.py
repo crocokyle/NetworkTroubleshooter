@@ -1,6 +1,10 @@
+# Local imports
 from endpoint import Endpoint
-from utils import is_same_24_subnet, legacy_run_command, get_client_net_info
+from utils.operating_system import legacy_run_command
+from utils.network import is_same_24_subnet
+from data_collectors.network.local import get_client_net_info
 
+# 3rd party imports
 import re
 from netaddr import IPAddress, AddrFormatError
 from PyQt5.QtCore import QProcess
@@ -45,4 +49,4 @@ def get_localhost_ip() -> str:
     pass
 
 if __name__ == '__main__':
-    print(get_internal_endpoints())
+    print(get_internal_endpoints("TODO"))
