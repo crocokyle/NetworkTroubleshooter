@@ -9,6 +9,14 @@ from netaddr import IPAddress
 def _get_completed_stdout(process: QProcess) -> str:
     return process.readAllStandardOutput().data().decode()
 
+def _parse_ipconfig_property(property: str, cmd_output: str) -> str:
+        property_value = None
+        property_pattern = fr"{property}[ \.]+: ((?:[\d]{1,3}.){3}[\d]{1,3})"
+        if match := re.search(property_pattern, cmd_output):
+            property_value = match.group(1)
+
+        return property_value
+
 def run_command(command: list[str], console_process: QProcess) -> str:
     try:
         console_process.setProgram(command[0])
@@ -30,17 +38,10 @@ def get_client_net_info() -> dict[str:str]:
     hostname = socket.gethostname()
     ip_address = socket.gethostbyname(hostname)
     ip_config_output = run_command(['ipconfig', '/all'])
-    dns_pattern = r"DNS Servers[ \.]+: ((?:[\d]{1,3}.){3}[\d]{1,3})"
-    dns_servers = None
-    if match := re.search(dns_pattern, ip_config_output):
-        dns_servers = match.group(1)
-
-    gateway = None
-    gateway_pattern = r"Default Gateway [ \.]+: ((?:[\d]{1,3}.){3}[\d]{1,3})"
-    if match := re.search(gateway_pattern, ip_config_output):
-        gateway = match.group(1)
+    dns_servers = _parse_ipconfig_property("DNS Servers", ip_config_output)
+    gateway = _parse_ipconfig_property("Default Gateway", ip_config_output)
+        
     return {
-        #"gateway": gateway,
         "hostname": hostname, 
         "ip": ip_address,
         "dns_server": dns_servers,
