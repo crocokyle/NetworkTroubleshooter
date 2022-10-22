@@ -12,12 +12,12 @@ def _parse_tracert(command_output:str) -> list[IPAddress]:
     hops = []
     for line in lines:
         if line:
-            dirty_ip = line.split()[-1]
-            clean_ip = dirty_ip.replace('[', '').replace(']', '')
-            try:
-                hops.append(IPAddress(clean_ip))
-            except AddrFormatError:
-                raise Exception(f'Invalid IP address {clean_ip}')
+            ip_field = line.split()[-1].replace('[', '').replace(']', '')
+            if re.match(r'(?:[0-9]{1,3}\.){3}[0-9]{1,3}', ip_field):
+                try:
+                    hops.append(IPAddress(ip_field))
+                except AddrFormatError:
+                    raise Exception(f'Invalid IP address {ip_field}')
     
     return hops
 
