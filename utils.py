@@ -2,6 +2,8 @@ import re
 import subprocess
 import socket
 
+from netaddr import IPAddress
+
 def run_command(command: list[str]) -> str:
     print(f"Running {' '.join(command)}...")
     try:
@@ -10,7 +12,12 @@ def run_command(command: list[str]) -> str:
     except OSError:
         raise Exception(f'Error running command: {command}')
 
-def get_client_net_details() -> dict[str:str]:
+def is_same_subnet(ip1: IPAddress, ip2: IPAddress) -> bool:
+    if ip1.words[0:3] == ip2.words[0:3]:
+        return True
+    return False
+
+def get_client_net_info() -> dict[str:str]:
     hostname = socket.gethostname()
     ip_address = socket.gethostbyname(hostname)
     ip_config_output = run_command(['ipconfig', '/all'])
@@ -27,5 +34,5 @@ def get_client_net_details() -> dict[str:str]:
 
 
 if __name__ == '__main__':
-    net_details = get_client_net_details()
+    net_details = get_client_net_info()
     print(net_details)
