@@ -1,5 +1,5 @@
 from main import *
-from endpoint import *
+from utils.network import *
 from data_collectors.network.discovery import *
 
 from PyQt5.QtWidgets import *

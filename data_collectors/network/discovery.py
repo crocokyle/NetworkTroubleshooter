@@ -1,7 +1,6 @@
 # Local imports
-from endpoint import Endpoint
 from utils.operating_system import legacy_run_command
-from utils.network import is_same_24_subnet
+from utils.network import Endpoint, is_same_24_subnet
 from data_collectors.network.local import get_client_net_info
 
 # 3rd party imports

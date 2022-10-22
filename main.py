@@ -2,7 +2,7 @@
 from tqdm import tqdm
 from pprint import pprint
 
-from endpoint import Endpoint
+from utils.network import Endpoint
 
 
 def validate_config(endpoint_config:list[dict]) -> list[Endpoint]:
