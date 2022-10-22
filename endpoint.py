@@ -1,9 +1,9 @@
 import re
 import subprocess
-import time
 from tqdm import tqdm
 from pprint import pprint
 
+from utils import run_command
 
 class Endpoint:
     def __init__(self, name, ip):
@@ -13,8 +13,7 @@ class Endpoint:
         self.packet_loss = 100
 
     def test(self):
-        raw_output = subprocess.run(['ping', self.ip], stdout=subprocess.PIPE)
-        ping_result = raw_output.stdout.decode('utf-8').splitlines()[8].strip()
+        ping_result = run_command(['ping', self.ip]).splitlines()[8].strip()
         if match := re.search(r'\((\d+)% loss\)', ping_result):
             self.packet_loss = int(match.group(1))
             if self.packet_loss == 0:
