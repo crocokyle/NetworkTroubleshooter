@@ -34,7 +34,7 @@ def get_private_ips(console_process: QProcess) -> list[IPAddress]:
     return internal_ips
 
 def get_internal_endpoints(console_process: QProcess) -> list[Endpoint]:
-    private_ips: list[IPAddress] = get_private_ips()
+    private_ips: list[IPAddress] = get_private_ips(console_process)
     client_info:dict[str:str] = get_client_net_info()
 
     for ip in private_ips:
