@@ -1,5 +1,5 @@
 from endpoint import Endpoint
-from utils import run_command, get_client_net_details
+from utils import run_command, get_client_net_info
 
 import re
 from netaddr import IPAddress, AddrFormatError
@@ -33,6 +33,7 @@ def get_private_ips() -> list[IPAddress]:
 
 def get_internal_endpoints() -> list[Endpoint]:
     private_ips: list[IPAddress] = get_private_ips()
+    client_info = get_client_net_info()
     
     
 def get_localhost_ip() -> str:
