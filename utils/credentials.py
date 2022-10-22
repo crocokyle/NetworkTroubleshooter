@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 
 class Credential(ABC):
     def __init__(self, **kwargs):
