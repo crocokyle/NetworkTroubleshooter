@@ -26,4 +26,5 @@ def get_client_net_details() -> dict[str:str]:
 
 
 if __name__ == '__main__':
-    print(get_client_net_details())
+    net_details = get_client_net_details()
+    print(net_details)
