@@ -1,5 +1,5 @@
 from endpoint import Endpoint
-from utils import is_same_subnet, run_command, get_client_net_info
+from utils import is_same_subnet, legacy_run_command, get_client_net_info
 
 import re
 from netaddr import IPAddress, AddrFormatError
@@ -24,7 +24,7 @@ def _parse_tracert(command_output:str) -> list[IPAddress]:
     return hops
 
 def get_private_ips(console_process: QProcess) -> list[IPAddress]:
-    tracert_output = run_command(['tracert', '8.8.8.8'], console_process)
+    tracert_output = legacy_run_command(['tracert', '8.8.8.8'])
     hops = _parse_tracert(tracert_output)
     internal_ips = []
     for hop in hops:
