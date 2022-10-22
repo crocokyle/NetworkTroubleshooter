@@ -6,7 +6,7 @@ from PyQt5.QtCore import QProcess
 
 from netaddr import IPAddress
 
-def run_command(console_process: QProcess, command: list[str]) -> str:
+def run_command(command: list[str], console_process: QProcess) -> str:
     try:
         console_process.setProgram(command[0])
         if len(command) > 1:
