@@ -46,7 +46,7 @@ def run_command(command: list[str], console_process: QProcess) -> str:
     except Exception as e:
         raise Exception(f'Error running command: {command}\n {e}')
 
-def is_same_subnet(ip1: IPAddress, ip2: IPAddress) -> bool:
+def is_same_24_subnet(ip1: IPAddress, ip2: IPAddress) -> bool:
     if ip1.words[0:3] == ip2.words[0:3]:
         return True
     return False

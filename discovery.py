@@ -1,5 +1,5 @@
 from endpoint import Endpoint
-from utils import is_same_subnet, legacy_run_command, get_client_net_info
+from utils import is_same_24_subnet, legacy_run_command, get_client_net_info
 
 import re
 from netaddr import IPAddress, AddrFormatError
@@ -38,7 +38,7 @@ def get_internal_endpoints(console_process: QProcess) -> list[Endpoint]:
     client_info:dict[str:str] = get_client_net_info()
 
     for ip in private_ips:
-        if is_same_subnet(ip, client_info.get('ip')):
+        if is_same_24_subnet(ip, client_info.get('ip')):
             router_endpoint = Endpoint('router', ip)
     
 def get_localhost_ip() -> str:
