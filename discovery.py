@@ -21,17 +21,19 @@ def _parse_tracert(command_output:str) -> list[IPAddress]:
     
     return hops
 
-def get_internal_endpoints() -> list[IPAddress]:
-    print(f'Running traceroute...')
+def get_private_ips() -> list[IPAddress]:
     tracert_output = run_command(['tracert', '8.8.8.8'])
     hops = _parse_tracert(tracert_output)
-
     internal_ips = []
     for hop in hops:
         if hop.is_private():
             internal_ips.append(hop)
 
     return internal_ips
+
+def get_internal_endpoints() -> list[Endpoint]:
+    private_ips: list[IPAddress] = get_private_ips()
+    
     
 def get_localhost_ip() -> str:
     pass
