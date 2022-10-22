@@ -3,6 +3,7 @@ import subprocess
 import socket
 
 def run_command(command: list[str]) -> str:
+    print(f"Running {' '.join(command)}...")
     try:
         raw_output = subprocess.run(command, stdout=subprocess.PIPE)
         return raw_output.stdout.decode('utf-8')
