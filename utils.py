@@ -11,7 +11,7 @@ def _get_completed_stdout(process: QProcess) -> str:
 
 def _parse_ipconfig_property(property: str, cmd_output: str) -> str:
         property_value = None
-        property_pattern = fr"{property}[ \.]+: ((?:[\d]{1,3}.){3}[\d]{1,3})"
+        property_pattern = re.escape(property) + "[ \.]+: ((?:[\d]{1,3}.){3}[\d]{1,3})"
         if match := re.search(property_pattern, cmd_output):
             property_value = match.group(1)
 
