@@ -1,5 +1,4 @@
 import re
-import subprocess
 from tqdm import tqdm
 from pprint import pprint
 
