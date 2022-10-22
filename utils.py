@@ -1,3 +1,4 @@
+import re
 import subprocess
 import socket
 
@@ -12,9 +13,17 @@ def get_client_net_details() -> dict[str:str]:
     hostname = socket.gethostname()
     ip_address = socket.gethostbyname(hostname)
     ip_config_output = run_command(['ipconfig', '/all'])
+    dns_pattern = r"DNS Servers[ \.]+: ((?:[\d]{1,3}.){3}[\d]{1,3})"
+    dns_servers = None
+    if match := re.search(dns_pattern, ip_config_output):
+        dns_servers = match.group(1)
 
-    return {"hostname": hostname, "ip": ip_address}
+    return {
+        "hostname": hostname, 
+        "ip": ip_address,
+        "dns_server": dns_servers,
+        }
 
 
 if __name__ == '__main__':
-    get_client_net_details()
+    print(get_client_net_details())
