@@ -15,11 +15,14 @@ class DataCollector(ABC):
         self.credentials: Credential = None
 
     @abstractmethod
-    def run(self):
+    def run(self) -> None:
         """
+        Run any DataCollector methods to gather data.
         Should gather and store `self.data` and `self.last_run`
+        Base class returns self.data
         """
         self.last_run = datetime.now()
+        return self.data
 
     def clear(self):
         self.data = None
