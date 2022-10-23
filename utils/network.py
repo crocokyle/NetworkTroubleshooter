@@ -3,6 +3,7 @@ from utils.operating_system import legacy_run_command
 
 #3rd party imports
 import re
+from datetime import datetime
 from netaddr import IPAddress
 from typing import Union
 
@@ -12,7 +13,15 @@ class Endpoint:
         self.ip = ip
         self.status = "offline"
         self.packet_loss = 100
+        self.last_run = datetime.fromtimestamp(0)
 
+    def __str__(self) -> str:
+        return f"Name: {self.name}\nIP: {self.ip}\nStatus: {self.status}\nPacket Loss: {self.packet_loss}\nLast Test: {self.last_run}"
+
+    def append(val) -> None:
+        super().run()
+        # TODO: implement isinstance for Endpoint vs IP???
+        
     def test(self):
         ping_result = legacy_run_command(['ping', self.ip]).splitlines()[8].strip()
         if match := re.search(r'\((\d+)% loss\)', ping_result):
@@ -26,6 +35,7 @@ class Endpoint:
         else:
             self.status = "Error parsing ping results!"
 
+        self.last_run = datetime.now()
         return self.status, self.packet_loss
 
 
