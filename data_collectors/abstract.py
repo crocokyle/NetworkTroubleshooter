@@ -1,6 +1,7 @@
 # Local imports
 from utils.credentials import Credential
-from utils.data_structures import Data
+from utils.data_structures import Data, Fact
+from utils.network import Endpoint
 
 # 3rd party imports
 from abc import ABC, abstractmethod
@@ -10,9 +11,10 @@ from datetime import datetime
 class DataCollector(ABC):
     def __init__(self):
         self.last_run = datetime.fromtimestamp(0)
-        self.data: Data = Data()
+        self.data: Data[Fact] = Data()
         self.target: str = ""
         self.credentials: Credential = None
+        self.endpoints: list[Endpoint] = []
 
     @abstractmethod
     def run(self) -> None:
