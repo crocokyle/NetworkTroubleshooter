@@ -8,6 +8,8 @@ class Fact(Enum):
         self.val = val
 
 # TODO: find out if facts can be structured better (use built in value)
+# TODO: Implement Enpoint object somehow
+
 class Data:
     class Network(Fact):
         CONNECTED_IP:str = 'connected_ip'
