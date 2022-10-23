@@ -1,4 +1,5 @@
 # Local imports
+from utils.network import Endpoint
 from utils.operating_system import legacy_run_command
 from data_collectors.abstract import DataCollector
 
@@ -7,6 +8,7 @@ import psutil
 import re
 import socket
 
+# TODO: Specify local
 class WindowsDataCollector(DataCollector):
     def __init__(self):
         super().__init__()
@@ -42,6 +44,7 @@ class WindowsDataCollector(DataCollector):
 
     def run(self):
         self.get_client_net_info()
+        self.endpoints.append(Endpoint(self.data.Network.HOSTNAME.val, self.data.Network.CONNECTED_IP.val))
         super().run()
 
 if __name__ == '__main__':
@@ -53,3 +56,9 @@ if __name__ == '__main__':
         print(f'Fact description: {fact.description}')
         print(f'Value: {fact.val}')
         print("===========================\n")
+
+    print(f'New endpoints generated: ')
+    for endpoint in local_dc.endpoints:
+        print(endpoint)
+        endpoint.test()
+        print(endpoint)
