@@ -35,12 +35,14 @@ class WindowsDataCollector(DataCollector):
         ip_address = socket.gethostbyname(hostname)
         ip_config_output = legacy_run_command(['ipconfig', '/all'])
 
-        self.data.Network.HOSTNAME.val = hostname
-        self.data.Network.CONNECTED_IP.val = ip_address
-        self.data.Network.CONNECTED_INTERFACE.val = self._get_connected_interface(ip_address)
-        self.data.Network.DNS_SERVER.val = self._parse_ipconfig_property("DNS Servers", ip_config_output)
-        self.data.Network.GATEWAY.val = self._parse_ipconfig_property("Default Gateway", ip_config_output)
-        self.data.Network.DHCP_SERVER.val = self._parse_ipconfig_property("DHCP Server", ip_config_output)
+        net = self.data.Network
+        
+        net.HOSTNAME.val = hostname
+        net.CONNECTED_IP.val = ip_address
+        net.CONNECTED_INTERFACE.val = self._get_connected_interface(ip_address)
+        net.DNS_SERVER.val = self._parse_ipconfig_property("DNS Servers", ip_config_output)
+        net.GATEWAY.val = self._parse_ipconfig_property("Default Gateway", ip_config_output)
+        net.DHCP_SERVER.val = self._parse_ipconfig_property("DHCP Server", ip_config_output)
 
     def run(self):
         self.get_client_net_info()
